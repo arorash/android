@@ -4,7 +4,7 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['username']) and isset($_POST['password'])){
             $db = new DbOperation();
-            if($db->create_user("Shashank","Shashank1@")){
+            if($db->create_user($_POST['username'],$_POST['password'])){
                 $response['error']=false;
                 $response['message']="User registered successfully";
             }
