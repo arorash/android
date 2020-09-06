@@ -4,13 +4,18 @@
     if($_SERVER['REQUEST_METHOD']=='POST'){
         if(isset($_POST['username']) and isset($_POST['password'])){
             $db = new DbOperation();
-            if($db->create_user($_POST['username'],$_POST['password'])){
+            $result = $db->create_user($_POST['username'],$_POST['password']);
+            if($result == 1){
                 $response['error']=false;
                 $response['message']="User registered successfully";
             }
-            else{
+            elseif($result == 2){
                 $response['error']=true;
                 $response['message']="Some error occour";
+            }
+            elseif($result == 0){
+                $response['error']=true;
+                $response['message']="Email is already exist.";
             }
         }
         else{
@@ -23,6 +28,6 @@
         $response['message']="Invalid Request";
     }
 
-    
+
 
     echo json_encode($response);
